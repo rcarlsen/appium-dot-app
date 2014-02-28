@@ -563,6 +563,10 @@ BOOL _isServerListening;
 	{
 		[self.serverTask setCurrentDirectoryPath:[NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle]resourcePath], @"node_modules/appium"]];
 	}
+
+    // be merciful...don't kill instruments
+    nodeCommandString = [nodeCommandString stringByAppendingString:@" -m"];
+
     [self.serverTask setLaunchPath:@"/bin/bash"];
     [self.serverTask setArguments: [NSArray arrayWithObjects: @"-l",
 									@"-c", nodeCommandString, nil]];
