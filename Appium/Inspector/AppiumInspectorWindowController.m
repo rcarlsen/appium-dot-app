@@ -47,7 +47,11 @@
         {
 			// create a new session if one does not already exist
             SECapabilities *capabilities = [SECapabilities new];
+            // recent versions of appium seems to require this:
             [capabilities addCapabilityForKey:@"device" andValue:model.deviceToForceString];
+            // the inspector seemed to prematurely quit if new commands were not received within a few seconds
+            // this should give us 5 minutes between commands:
+            [capabilities addCapabilityForKey:@"newCommandTimeout" andValue:@(300)];
 
             [self.driver startSessionWithDesiredCapabilities:capabilities requiredCapabilities:nil];
 			if (self.driver == nil || self.driver.session == nil || self.driver.session.sessionId == nil)
